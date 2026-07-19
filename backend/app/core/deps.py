@@ -1,17 +1,17 @@
-from typing import AsyncGenerator, Optional
-from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from typing import AsyncGenerator
 from jose import jwt
+from fastapi import Depends, HTTPException, status
 from app.core.config import settings
-from app.db.connection import AsyncSessionLocal
+from app.db.connection import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.models.user import User
 from sqlalchemy import select
+from app.models.user import User
 
-async def get_session() -> AsyncGenerator[AsyncSession, None]:
-    async with AsyncSessionLocal() as session:
-        yield session
+security = HTTPBearer()
 
-async def get_current_user(token: str, session: AsyncSession = Depends(get_session)) -> User:
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), session: AsyncSession = Depends(get_session)) -> User:
+    token = credentials.credentials
     try:
         payload = jwt.decode(token, settings.JWT_SECRET, algorithms=["HS256"])
         sub = payload.get("sub")
