@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "e_learning_backend"
+version = "0.1.0"
+description = "FastAPI backend for E-Learning platform"
+authors = ["g18012820-web <g18012820@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.2"
+uvicorn = {extras = ["standard"], version = "^0.21.1"}
+SQLAlchemy = "^1.4.49"
+asyncpg = "^0.27.0"
+alembic = "^1.11.1"
+psycopg[binary] = "^3.1.10"
+python-dotenv = "^1.0.0"
+python-jose = "^3.3.0"
+passlib[bcrypt] = "^1.7.5"
+pydantic = "^1.10.12"
+httpx = "^0.24.1"
+aioredis = "^2.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
