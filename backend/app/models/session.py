@@ -17,5 +17,7 @@ class Session(Base):
     country = Column(String)
     city = Column(String)
     login_at = Column(DateTime(timezone=True), server_default=func.now())
-    last_activity = Column(DateTime(timezone=True))
+    last_activity = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     status = Column(String, server_default='active')
+    refresh_token = Column(String, nullable=True)
+    revoked = Column(Boolean, server_default='false')
